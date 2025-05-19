@@ -10,7 +10,7 @@ import Logout from './components/Logout'
 import Navbar from './components/Navbar'
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"))
 
   return (
     <>
