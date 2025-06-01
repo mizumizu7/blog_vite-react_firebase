@@ -10,17 +10,29 @@ const CreatePost = ({ isAuth }) => {
 
   const navigate = useNavigate()
 
-  const createPost = async() => {
-    await addDoc(collection(db, "posts"), {
-      title: title,
-      postText: postText,
-      author: {
-        username: auth.currentUser.displayName,
-        id: auth.currentUser.uid
-      }
-    })
+  const postData = {
+    title,
+    postText,
+  }
 
-    navigate("/")
+  const isPostValid = (postData) => {
+    return Object.values(postData).every(value => value !== null && value !== undefined && value !== "")
+  }
+
+  const createPost = async() => {
+    if (isPostValid(postData)) {
+      await addDoc(collection(db, "posts"), {
+        title: title,
+        postText: postText,
+        author: {
+          username: auth.currentUser.displayName,
+          id: auth.currentUser.uid
+        }
+      })
+      navigate("/")
+    } else {
+      alert("タイトルまたは投稿が未入力です。")
+    }
   }
 
   useEffect(() => {
